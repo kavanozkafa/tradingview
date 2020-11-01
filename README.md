@@ -1,0 +1,2 @@
+# tradingview
+some pinescript codes 
