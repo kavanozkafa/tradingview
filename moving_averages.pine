@@ -1,0 +1,76 @@
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// author  @kavanozkafa
+//@version=4
+// Triple SMA - EMA - WMA - HULL 
+
+
+
+study(title="Triple SMA - EMA - WMA - HULL", shorttitle="Moving Averages",overlay=true)
+
+
+// Simple Moving Average
+
+smaPriceSource = input(title="SMA Price Source", defval=close)
+
+sma1 = input(20, "SMA 1")
+plot(sma(smaPriceSource, sma1), color= color.yellow, linewidth=1, title="SMA 1")
+
+sma2 = input(50, "SMA 2")
+plot(sma(smaPriceSource, sma2), color= color.yellow, linewidth=3, title="SMA 2")
+
+sma3 = input(200, "SMA 3")
+plot(sma(smaPriceSource, sma3), color= color.yellow, linewidth=5, title="SMA 3")
+
+
+// Exponential Moving Average
+
+emaPriceSource = input(title="EMA Price Source", defval=close)
+
+ema1 = input(20, "EMA1")
+plot(ema(emaPriceSource, ema1), color= color.white, linewidth=1, title="EMA 1")
+
+ema2 = input(21, "EMA2")
+plot(ema(emaPriceSource, ema2), color=color.white, linewidth=3, title="EMA 2")
+
+ema3 = input(55, "EMA3")
+plot(ema(emaPriceSource, ema3), color=color.white, linewidth=5, title="EMA 3")
+
+
+
+// Weighted Moving Average
+
+wmaPriceSource = input(title="WMA Price Source", defval=close)
+
+wma1 = input(20, "WMA1")
+offset1 = input(title="WMA1 Offset", type=input.integer, defval=0, minval=-500, maxval=500)
+plot(wma(wmaPriceSource, wma1), color=color.blue, linewidth=1,offset=offset1, title="WMA 1")
+
+
+wma2 = input(50, "WMA2")
+offset2 = input(title="WMA1 Offset", type=input.integer, defval=0, minval=-500, maxval=500)
+plot(wma(wmaPriceSource, wma2), color=color.blue, linewidth=3,offset=offset1, title="WMA 2")
+
+wma3 = input(200, "WMA3")
+offset3 = input(title="WMA1 Offset", type=input.integer, defval=0, minval=-500, maxval=500)
+plot(wma(wmaPriceSource, wma3), color=color.blue, linewidth=5,offset=offset1, title="WMA 3")
+
+
+ 
+// Hull Moving Average
+
+hullPriceSource = input(title="Hull Price Source", defval=close)
+
+hull1 = input(9,"Hull 1", minval=1)
+hull1Plot = wma(2*wma(hullPriceSource, hull1/2)-wma(hullPriceSource, hull1), round(sqrt(hull1)))
+plot( hull1Plot, color=color.purple, linewidth=1,title="Hull 1")
+
+hull2 = input(19,"Hull 2", minval=1)
+hull2Plot = wma(2*wma(hullPriceSource, hull2/2)-wma(hullPriceSource, hull2), round(sqrt(hull2)))
+plot( hull2Plot, color=color.purple, linewidth=3,title="Hull 2")
+
+hull3 = input(29,"Hull 3", minval=1)
+hull3Plot = wma(2*wma(hullPriceSource, hull3/2)-wma(hullPriceSource, hull3), round(sqrt(hull3)))
+plot( hull3Plot, color=color.purple, linewidth=3,title="Hull 3")
+
+
+
